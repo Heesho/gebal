@@ -25,7 +25,12 @@ export function agentContext(store: Store, runId: string) {
     snapshotHash: data.snapshot.hash,
     instructions: systemPrompt,
     requirements: data.scope.requirements,
-    scope: { paths: data.scope.paths, exclusions: data.scope.exclusions },
+    scope: {
+      paths: data.scope.paths,
+      exclusions: data.scope.exclusions,
+      ...(data.scope.projectPath ? { projectPath: data.scope.projectPath } : {}),
+      ...(data.scope.dependencyPaths ? { dependencyPaths: data.scope.dependencyPaths } : {}),
+    },
     compiler: data.plan.diagnosis.compiler,
     evm: data.plan.diagnosis.evm,
     files: data.snapshot.files.map((f) => ({

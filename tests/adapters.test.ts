@@ -113,7 +113,15 @@ test('Slither parser preserves native facts and rejects unknown schemas and bad 
     const result = parse({ success: true, error: null, results: { detectors: [detector] } });
     assert.equal(result.findings[0].confidence, 'medium');
     assert.equal(result.findings[0].source[0].start, 5);
-    assert.throws(() => parse({ success: true, error: null, results: {} }));
+    assert.equal(parse({ success: true, error: null, results: {} }).state, 'succeeded');
+    const missingCompletion = JSON.parse(
+      toolEnvelope('slither', { success: true, error: null, results: {} }),
+    );
+    missingCompletion.stderr = '';
+    assert.throws(
+      () => parseTool('slither', JSON.stringify(missingCompletion), snap),
+      /completion/,
+    );
     assert.throws(() => parse({ success: false, error: 'failed', results: { detectors: [] } }));
     assert.throws(() =>
       parse({

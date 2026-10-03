@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { posix } from 'node:path';
 import { validateRefs } from '../../core/src/intake.ts';
 import { type SnapshotT, type Ref } from '../../core/src/schema.ts';
 export type Candidate = {
@@ -20,28 +21,30 @@ const Slither = z.object({
   success: z.boolean(),
   error: z.unknown(),
   results: z.object({
-    detectors: z.array(
-      z.object({
-        check: z.string().min(1),
-        impact: z.enum(['High', 'Medium', 'Low', 'Informational', 'Optimization']),
-        confidence: z.enum(['High', 'Medium', 'Low']),
-        description: z.string().min(1),
-        elements: z
-          .array(
-            z.object({
-              source_mapping: z.object({
-                filename_relative: z.string().optional(),
-                filename_absolute: z.string().optional(),
-                lines: z.array(z.number().int().positive()).min(1),
+    detectors: z
+      .array(
+        z.object({
+          check: z.string().min(1),
+          impact: z.enum(['High', 'Medium', 'Low', 'Informational', 'Optimization']),
+          confidence: z.enum(['High', 'Medium', 'Low']),
+          description: z.string().min(1),
+          elements: z
+            .array(
+              z.object({
+                source_mapping: z.object({
+                  filename_relative: z.string().optional(),
+                  filename_absolute: z.string().optional(),
+                  lines: z.array(z.number().int().positive()).min(1),
+                }),
               }),
-            }),
-          )
-          .min(1),
-      }),
-    ),
+            )
+            .min(1),
+        }),
+      )
+      .default([]),
   }),
 });
-export function parseTool(kind: string, raw: string, snap: SnapshotT) {
+export function parseTool(kind: string, raw: string, snap: SnapshotT, projectPath = '') {
   const env = envelope.parse(JSON.parse(raw));
   const data = JSON.parse(env.stdout);
   const findings: Candidate[] = [];
@@ -49,21 +52,35 @@ export function parseTool(kind: string, raw: string, snap: SnapshotT) {
     state: 'succeeded' | 'failed' | 'unknown' = 'succeeded';
   const gaps: string[] = [];
   if (kind === 'slither') {
-    if (!/\b0\.11\./.test(env.version))
+    if (!/^0\.11\.3$/.test(env.version))
       throw new Error('Unsupported Slither output version: ' + env.version);
+    const status = z.object({ success: z.boolean(), error: z.unknown() }).parse(data);
+    if (!status.success) throw new Error('Slither analysis unsuccessful: ' + String(status.error));
     const output = Slither.parse(data);
+    const completion = env.stderr.match(
+      /analyzed \((\d+) contracts with (\d+) detectors\), (\d+) result\(s\) found/,
+    );
+    if (
+      !completion ||
+      Number(completion[1]) < 1 ||
+      Number(completion[2]) < 1 ||
+      Number(completion[3]) !== output.results.detectors.length
+    )
+      throw new Error('Slither completion evidence missing or inconsistent');
     if (!output.success) throw new Error('Slither analysis unsuccessful');
     if (env.exitCode !== 0 && env.exitCode !== 255) throw new Error('Unexpected Slither exit code');
     for (const item of output.results.detectors) {
-      const source = item.elements.map((e) => ({
-        path: (
-          e.source_mapping.filename_relative ??
-          e.source_mapping.filename_absolute ??
-          ''
-        ).replace(/^\/source\//, ''),
-        start: Math.min(...e.source_mapping.lines),
-        end: Math.max(...e.source_mapping.lines),
-      }));
+      const source = item.elements.map((e) => {
+        const name = e.source_mapping.filename_absolute ?? e.source_mapping.filename_relative ?? '';
+        const path = name.startsWith('/source/')
+          ? name.slice('/source/'.length)
+          : posix.join(projectPath, name);
+        return {
+          path,
+          start: Math.min(...e.source_mapping.lines),
+          end: Math.max(...e.source_mapping.lines),
+        };
+      });
       validateRefs(snap, source);
       findings.push({
         title: item.check,
@@ -85,7 +102,7 @@ export function parseTool(kind: string, raw: string, snap: SnapshotT) {
     claim = `Slither completed; ${findings.length} analyzer observations require human review.`;
     gaps.push('Static detectors do not establish property completeness or correctness.');
   } else if (kind === 'foundry-test') {
-    if (!/forge Version: 1\./.test(env.version))
+    if (!/forge Version: 1\.3\.1(?:-|\s|$)/.test(env.version))
       throw new Error('Unsupported Foundry version: ' + env.version);
     const suites = z
       .record(
@@ -111,7 +128,7 @@ export function parseTool(kind: string, raw: string, snap: SnapshotT) {
       'Reachability, rejection/revert rates, property sensitivity and liveness coverage are not established.',
     );
   } else if (kind === 'foundry-build') {
-    if (!/forge Version: 1\./.test(env.version))
+    if (!/forge Version: 1\.3\.1(?:-|\s|$)/.test(env.version))
       throw new Error('Unsupported Foundry version: ' + env.version);
     const output = z
       .object({

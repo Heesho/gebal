@@ -40,6 +40,7 @@ try {
   const run = enqueue(store, plan.id);
   await workRun(store, run.id);
   const result = summarize(store, run.id);
+  if (result.run.state !== 'succeeded') process.exitCode = 3;
   const dir = join(home, 'reports');
   mkdirSync(dir, { recursive: true });
   for (const format of ['json', 'md', 'html', 'sarif'] as const)

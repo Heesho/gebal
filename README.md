@@ -14,6 +14,8 @@ From your smart-contract repository, give your coding assistant this prompt:
 
 **Agent entry point: [START_HERE.md](START_HERE.md).** It covers cloning/setup, scope, approval, context export, review import and delivery. The assistant you already use performs the review; Gebal does not require a second AI account.
 
+**Version 0.2:** validated source-review workflow plus optional sandboxed Forge/Slither checks. Live fixture tests cover three compiler versions and nested monorepos. See [verification and limits](docs/verification.md). A project still needs an explicit scope, requirements and its pinned dependencies before a full tool run.
+
 ## Try it
 
 Install Node **22.23.3** and pnpm **10.34.6**, then clone and run:
@@ -70,7 +72,7 @@ The private store defaults to `~/.local/share/gebal`. Override with `GEBAL_HOME`
 
 ## Add local tool evidence
 
-Set `sourceOnly: false` and optionally `existingTests: true` in your scope configuration. Supply a reviewed immutable tool image and re-plan/approve. See [sandbox preparation](docs/sandbox.md).
+Set `sourceOnly: false` and optionally `existingTests: true` in your scope configuration. Supply a reviewed immutable tool image and re-plan/approve. See [sandbox preparation](docs/sandbox.md) and [monorepo scope](docs/monorepos.md).
 
 ```sh
 pnpm gebal doctor
@@ -78,7 +80,7 @@ pnpm gebal doctor
 pnpm demo --tools
 ```
 
-Foundry and Slither run only inside the restricted local Docker sandbox. No network, host credentials, FFI, project package scripts or host-tool fallback. Missing Docker, missing images, unsupported config, failed compilation and unknown output stay visibly incomplete. The current machine lacks a Docker daemon, so live adapter validation is still blocked; parser tests are not a substitute.
+Foundry and Slither run only inside the restricted local Docker sandbox. No network, host credentials, FFI, project package scripts or host-tool fallback. Missing Docker, missing images, unsupported config, failed compilation and unknown output stay visibly incomplete. Live fixture validation covers the pinned toolchain and three compiler versions in CI; a selected project still needs its own complete dependency scope and approved execution plan.
 
 Queue long-running checks for a separate worker:
 

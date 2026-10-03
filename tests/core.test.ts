@@ -87,11 +87,11 @@ test('state inside assessed project and oversized files fail closed', () => {
     c.cleanup();
   }
 });
-test('FFI, compiler drift, profiles and missing dependencies remain unsupported', () => {
+test('FFI, unknown settings and missing dependencies remain unsupported', () => {
   for (const suffix of [
     '\nffi = true\n',
-    '\nfs_permissions = [{ access = "read", path = "/" }]\n',
-    '\n[profile.ci]\nffi = true\n',
+    '\nunknown_setting = true\n',
+    '\nsolc = "/untrusted/compiler"\n',
   ]) {
     const c = setup();
     try {

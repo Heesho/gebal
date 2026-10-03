@@ -52,7 +52,7 @@ export function createPlan(
         ]
       : [],
     methodology: 'native-review-v1',
-    adapterVersion: '0.1.0',
+    adapterVersion: '0.2.0',
   };
   const plan = Plan.parse({ ...data, hash: hash(stable(data)) });
   store.put('plan', plan);
@@ -281,6 +281,8 @@ export async function workRun(store: Store, id: string, externalSignal?: AbortSi
     plan = store.get<PlanT>('plan', run.planId),
     snap = store.get<SnapshotT>('snapshot', run.snapshotId);
   if (!approved(store, plan)) throw new Error('Plan approval missing');
+  if (plan.adapterVersion !== '0.2.0')
+    throw new Error('Legacy execution plan: create and approve a new plan for adapter 0.2.0');
   const controller = new AbortController();
   const abort = () => controller.abort();
   externalSignal?.addEventListener('abort', abort, { once: true });
@@ -448,8 +450,12 @@ export async function workRun(store: Store, id: string, externalSignal?: AbortSi
             evidence = [artifact];
             let version: string | null = null;
             if (result.cancelled) {
-              state = 'cancelled';
-              detail = 'Execution cancelled';
+              const timedOut =
+                Date.now() >= deadline &&
+                !externalSignal?.aborted &&
+                !store.get<RunT>('run', id).cancelRequested;
+              state = timedOut ? 'timeout' : 'cancelled';
+              detail = timedOut ? 'Run wall-time budget exceeded' : 'Execution cancelled';
             } else if (result.timedOut) {
               state = 'timeout';
               detail = 'Execution time budget exceeded';
@@ -460,20 +466,30 @@ export async function workRun(store: Store, id: string, externalSignal?: AbortSi
               state = 'failed';
               detail = 'Sandbox/tool execution failed. Inspect the evidence artifact.';
             } else {
-              const parsed = parseTool(task.kind, result.stdout, snap);
-              state = parsed.state;
-              detail = parsed.claim;
-              version = parsed.version;
-              recordCandidates(store, id, snap, parsed.findings, evidence, task.kind);
-              store.put('coverage', {
-                ...identity(),
-                runId: id,
-                taskId: task.id,
-                state,
-                claim: detail,
-                gaps: parsed.gaps,
-                evidence,
-              });
+              try {
+                const parsed = parseTool(
+                  task.kind,
+                  result.stdout,
+                  snap,
+                  String(plan.diagnosis.settings.projectPath ?? ''),
+                );
+                state = parsed.state;
+                detail = parsed.claim;
+                version = parsed.version;
+                recordCandidates(store, id, snap, parsed.findings, evidence, task.kind);
+                store.put('coverage', {
+                  ...identity(),
+                  runId: id,
+                  taskId: task.id,
+                  state,
+                  claim: detail,
+                  gaps: parsed.gaps,
+                  evidence,
+                });
+              } catch (error) {
+                state = 'failed';
+                detail = 'Tool output rejected: ' + String(error).slice(0, 3000);
+              }
             }
             store.put('execution', {
               ...identity(),
@@ -559,11 +575,15 @@ export function compare(store: Store, left: string, right: string) {
     scopeChanged:
       stable({
         paths: a.scope.paths,
+        projectPath: a.scope.projectPath,
+        dependencyPaths: a.scope.dependencyPaths,
         exclusions: a.scope.exclusions,
         requirements: a.scope.requirements,
       }) !==
       stable({
         paths: b.scope.paths,
+        projectPath: b.scope.projectPath,
+        dependencyPaths: b.scope.dependencyPaths,
         exclusions: b.scope.exclusions,
         requirements: b.scope.requirements,
       }),

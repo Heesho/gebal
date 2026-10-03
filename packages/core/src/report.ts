@@ -1,5 +1,6 @@
-import { summarize } from './engine.ts';
+import { summarize, verifyPlan } from './engine.ts';
 import { Store } from './store.ts';
+import { verifySnapshot } from './intake.ts';
 const escape = (x: unknown) =>
   String(x).replace(
     /[&<>"']/g,
@@ -11,9 +12,19 @@ const md = (x: unknown) =>
     .replace(/[\\`*{}\[\]()#+.!_|<>]/g, '\\$&');
 export function report(store: Store, id: string, format: 'json' | 'md' | 'html' | 'sarif') {
   const data = summarize(store, id);
-  for (const f of data.findings) {
-    for (const h of f.evidence) store.readArtifact(h);
-  }
+  verifyPlan(data.plan);
+  verifySnapshot(store, data.snapshot);
+  if (data.plan.snapshotHash !== data.snapshot.hash || data.plan.snapshotId !== data.snapshot.id)
+    throw new Error('Run snapshot does not match the approved plan');
+  const records = [
+    ...data.tasks,
+    ...data.findings,
+    ...data.observations,
+    ...data.coverage,
+    ...data.executions,
+    ...data.invocations,
+  ];
+  for (const h of new Set(records.flatMap((r) => r.evidence ?? []))) store.readArtifact(h);
   if (format === 'json') return JSON.stringify(data, null, 2);
   if (format === 'sarif')
     return JSON.stringify(
@@ -22,7 +33,7 @@ export function report(store: Store, id: string, format: 'json' | 'md' | 'html' 
         $schema: 'https://json.schemastore.org/sarif-2.1.0.json',
         runs: [
           {
-            tool: { driver: { name: data.brand, version: '0.1.0' } },
+            tool: { driver: { name: data.brand, version: '0.2.0' } },
             invocations: [
               {
                 executionSuccessful: data.run.state === 'succeeded',
@@ -68,7 +79,7 @@ export function report(store: Store, id: string, format: 'json' | 'md' | 'html' 
       .filter((t) => t.state !== 'succeeded')
       .map((t) => `- ${md(t.kind)}: **${md(t.state)}** — ${md(t.detail)}`)
       .join('\n') || 'All planned tasks completed. Coverage remains limited to the checks below.'
-  }\n\n## Scope and requirements\n\n${md(data.scope.requirements)}\n\nAuthorized: ${data.scope.paths.map(md).join(', ')}\n\nExcluded/absent: ${data.snapshot.excluded.map(md).join(', ')}\n\n## Check evidence\n\n${data.tasks.map((t) => `- ${md(t.kind)}: ${md(t.state)}. ${md(t.detail)}\n  Evidence: ${t.evidence.join(', ') || 'none'}`).join('\n')}\n\n## Findings requiring human review\n\n${data.findings.map((f) => `### ${md(f.title)}\n\nSeverity: ${f.severity}; confidence: ${f.confidence}; evidence: ${f.evidenceType}; disposition: ${md(data.decisions.filter((d) => d.subjectId === f.id).at(-1)?.action ?? 'needs-review')}\n\n${md(f.description)}\n\nSource: ${f.source.map((s) => `${md(s.path)}:${s.start}-${s.end}`).join(', ')}\n\nArtifacts: ${f.evidence.join(', ')}\n`).join('\n') || 'No findings recorded. This does not establish safety.'}\n\n## Coverage gaps\n\n${data.coverage
+  }\n\n## Scope and requirements\n\n${md(data.scope.requirements)}\n\nAuthorized: ${data.scope.paths.map(md).join(', ')}\n\nProject path: ${md(data.scope.projectPath ?? '.')}\n\nExplicit dependency paths: ${(data.scope.dependencyPaths ?? []).map(md).join(', ') || 'none'}\n\nExecution policy: ${data.plan.diagnosis.notes.map(md).join(' ')}\n\nExcluded/absent: ${data.snapshot.excluded.map(md).join(', ')}\n\n## Check evidence\n\n${data.tasks.map((t) => `- ${md(t.kind)}: ${md(t.state)}. ${md(t.detail)}\n  Evidence: ${t.evidence.join(', ') || 'none'}`).join('\n')}\n\n## Findings requiring human review\n\n${data.findings.map((f) => `### ${md(f.title)}\n\nSeverity: ${f.severity}; confidence: ${f.confidence}; evidence: ${f.evidenceType}; disposition: ${md(data.decisions.filter((d) => d.subjectId === f.id).at(-1)?.action ?? 'needs-review')}\n\n${md(f.description)}\n\nSource: ${f.source.map((s) => `${md(s.path)}:${s.start}-${s.end}`).join(', ')}\n\nArtifacts: ${f.evidence.join(', ')}\n`).join('\n') || 'No findings recorded. This does not establish safety.'}\n\n## Coverage gaps\n\n${data.coverage
     .flatMap((c) => c.gaps)
     .map((g: string) => '- ' + md(g))
     .join(

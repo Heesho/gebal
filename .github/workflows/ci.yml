@@ -17,9 +17,33 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm test
       - run: pnpm build
+      - run: pnpm format:check
       - run: pnpm evaluate
       - name: Keyless intake demonstration (not a completed security assessment)
         run: pnpm demo
-# A separate operator job must supply a locally reviewed, immutable tool image.
-# gebal run exits 3 for incomplete analysis, 2 for policy/configuration errors.
-# Do not use continue-on-error or reinterpret a blocked run as a green assessment.
+  sandbox:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: ['0.8.26', '0.8.28', '0.8.30']
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
+        with:
+          version: 10.34.6
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.23.3
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Prepare checksum-verified tool image (public tools only)
+        run: python3 scripts/prepare-tools.py --compiler '${{ matrix.compiler }}' --output '${{ runner.temp }}/gebal-image'
+      - name: Run real fixture and isolation checks (no project source or secrets)
+        env:
+          GEBAL_INTEGRATION_COMPILER: '${{ matrix.compiler }}'
+          GEBAL_ISOLATION_CANARY: synthetic-not-a-secret
+        run: |
+          export GEBAL_INTEGRATION_IMAGE="$(docker image inspect --format '{{.Id}}' 'gebal-tools:${{ matrix.compiler }}')"
+          pnpm exec tsx --test tests/sandbox.integration.test.ts

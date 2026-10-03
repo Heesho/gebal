@@ -38,5 +38,8 @@ export const toolEnvelope = (tool: 'forge' | 'slither', data: unknown, exitCode 
     compilerVersion: 'Version: 0.8.28+commit.test',
     exitCode,
     stdout: JSON.stringify(data),
-    stderr: '',
+    stderr:
+      tool === 'slither'
+        ? `fixture analyzed (1 contracts with 100 detectors), ${(data as any)?.results?.detectors?.length ?? 0} result(s) found`
+        : '',
   });

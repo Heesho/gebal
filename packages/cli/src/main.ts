@@ -24,7 +24,7 @@ import { agentContext, importAgentReview } from '../../core/src/agent.ts';
 const program = new Command()
   .name('gebal')
   .description('Bring-your-own-AI Solidity review harness. Source, evidence, decisions.')
-  .version('0.1.0')
+  .version('0.2.0')
   .option('--home <directory>', 'Private state directory outside assessed projects');
 const store = () => new Store(program.opts().home);
 const print = (v: unknown) => console.log(typeof v === 'string' ? v : JSON.stringify(v, null, 2));
@@ -39,6 +39,8 @@ const withStore = async (fn: (s: Store) => unknown) => {
 const configSchema = z
   .object({
     paths: z.array(relpath).min(1),
+    projectPath: relpath.optional(),
+    dependencyPaths: z.array(relpath).optional(),
     exclusions: z.array(relpath),
     requirements: z.string().min(1),
     permission: z.enum(['owned', 'authorized']),
@@ -106,6 +108,10 @@ for (const name of ['plan', 'review'])
           cfg.exclusions,
           cfg.requirements,
           cfg.permission,
+          {
+            ...(cfg.projectPath ? { projectPath: cfg.projectPath } : {}),
+            ...(cfg.dependencyPaths ? { dependencyPaths: cfg.dependencyPaths } : {}),
+          },
         );
         const plan = createPlan(s, snap.id, {
           image: cfg.image ?? process.env.GEBAL_TOOL_IMAGE,

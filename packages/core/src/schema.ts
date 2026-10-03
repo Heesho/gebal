@@ -46,6 +46,8 @@ export const Scope = z.object({
   projectId: z.string(),
   authorized: z.literal(true),
   paths: z.array(relpath).min(1),
+  projectPath: relpath.optional(),
+  dependencyPaths: z.array(relpath).optional(),
   exclusions: z.array(relpath),
   requirements: z.string().min(1).max(20000),
   permission: z.enum(['owned', 'authorized']),
@@ -114,7 +116,7 @@ export const Plan = z.object({
   provider: ProviderConfig.nullable(),
   egress: z.array(z.string()),
   methodology: z.literal('native-review-v1'),
-  adapterVersion: z.literal('0.1.0'),
+  adapterVersion: z.enum(['0.1.0', '0.2.0']),
   hash: digest,
 });
 export const Run = z.object({
