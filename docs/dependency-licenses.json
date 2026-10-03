@@ -1,0 +1,113 @@
+{
+  "MIT": [
+    {
+      "name": "@esbuild/darwin-arm64",
+      "versions": [
+        "0.28.2"
+      ],
+      "license": "MIT",
+      "homepage": "https://github.com/evanw/esbuild#readme",
+      "description": "The macOS ARM 64-bit binary for esbuild, a JavaScript bundler."
+    },
+    {
+      "name": "@types/node",
+      "versions": [
+        "22.20.5"
+      ],
+      "license": "MIT",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node",
+      "description": "TypeScript definitions for node"
+    },
+    {
+      "name": "commander",
+      "versions": [
+        "15.0.0"
+      ],
+      "license": "MIT",
+      "author": "TJ Holowaychuk",
+      "homepage": "https://github.com/tj/commander.js#readme",
+      "description": "the complete solution for node.js command-line programs"
+    },
+    {
+      "name": "esbuild",
+      "versions": [
+        "0.28.2"
+      ],
+      "license": "MIT",
+      "homepage": "https://github.com/evanw/esbuild#readme",
+      "description": "An extremely fast JavaScript and CSS bundler and minifier."
+    },
+    {
+      "name": "fsevents",
+      "versions": [
+        "2.3.3"
+      ],
+      "license": "MIT",
+      "homepage": "https://github.com/fsevents/fsevents",
+      "description": "Native Access to MacOS FSEvents"
+    },
+    {
+      "name": "prettier",
+      "versions": [
+        "3.9.9"
+      ],
+      "license": "MIT",
+      "author": "James Long",
+      "homepage": "https://prettier.io",
+      "description": "Prettier is an opinionated code formatter"
+    },
+    {
+      "name": "tsx",
+      "versions": [
+        "4.23.15"
+      ],
+      "license": "MIT",
+      "author": "Hiroki Osame",
+      "homepage": "https://tsx.hirok.io",
+      "description": "TypeScript Execute (tsx): Node.js enhanced with esbuild to run TypeScript & ESM files"
+    },
+    {
+      "name": "undici-types",
+      "versions": [
+        "6.21.0"
+      ],
+      "license": "MIT",
+      "homepage": "https://undici.nodejs.org",
+      "description": "A stand-alone types package for Undici"
+    },
+    {
+      "name": "zod",
+      "versions": [
+        "4.6.5"
+      ],
+      "license": "MIT",
+      "author": "Colin McDonnell",
+      "homepage": "https://zod.dev",
+      "description": "TypeScript-first schema declaration and validation library with static type inference"
+    }
+  ],
+  "BSD-3-Clause": [
+    {
+      "name": "smol-toml",
+      "versions": [
+        "1.9.0"
+      ],
+      "license": "BSD-3-Clause",
+      "author": "Cynthia Rey",
+      "homepage": "https://github.com/squirrelchat/smol-toml#readme",
+      "description": "A small, fast, and correct TOML parser/serializer"
+    }
+  ],
+  "Apache-2.0": [
+    {
+      "name": "typescript",
+      "versions": [
+        "5.9.3"
+      ],
+      "license": "Apache-2.0",
+      "author": "Microsoft Corp.",
+      "homepage": "https://www.typescriptlang.org/",
+      "description": "TypeScript is a language for application scale JavaScript development"
+    }
+  ]
+}

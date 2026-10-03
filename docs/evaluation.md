@@ -1,0 +1,9 @@
+# Evaluation protocol status
+
+`pnpm evaluate` runs `gebal-infrastructure-controls-v1` in an isolated temporary state directory against original synthetic source. It checks conservative intake and parser behavior for empty campaigns and malformed output. Labels exist only in the evaluator; no model calls occur. The protocol and fixture are hashed. The output explicitly leaves security precision, known-finding recall and cost unknown. These checks validate plumbing; they are not a vulnerability benchmark.
+
+`fixtures/vault` is an original non-financial credit ledger. Its authored tests check accounting consistency, owner authorization, bounded retirement and rounding. No third-party exploit scripts, historical contest reports or fixes are bundled. The original fixture's intended behavior is a development label, not independent human adjudication. No live Solidity execution has been observed on this machine.
+
+Before claiming evaluation quality, add independently reviewed paired synthetic controls and controlled mutations, licensed historical pre-fix snapshots, and private held-out cases. Store labels outside reviewer context. Freeze benchmarks independently of method tuning. Review method packs/retrieval corpora for leakage; disable browsing and uncontrolled retrieval. Compare static-only, one-model, licensed baselines and independent multi-model methods under matched budgets and repeat stochastic runs. Record project variation, severity-specific known-finding recall, human precision, unjudged findings, duplicates, unsupported claims, human effort, latency, spend and marginal contribution. Historical absence is unjudged rather than false. Public cases cannot establish training-contamination freedom.
+
+These broader evaluations and benchmark imports are intentionally unfinished. No leaderboard, superiority score, detection-rate claim, formal proof, or cost-savings claim is generated.

@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 1,
+  "brand": "Gebal",
+  "domain": "gebal.ai",
+  "run": {
+    "schemaVersion": 1,
+    "id": "7b9fcbbf-396d-48d4-adb4-d9658f02bcaf",
+    "createdAt": "2026-10-03T22:12:40.556Z",
+    "planId": "981e5dd7-6e04-47be-bfa9-e8f3ae0953e8",
+    "snapshotId": "bd5fa434-aca9-432a-a7b3-171caea2c125",
+    "state": "succeeded",
+    "finishedAt": "2026-10-03T22:12:40.563Z",
+    "cancelRequested": false,
+    "costUsd": null,
+    "reservedTokens": 0,
+    "usedTokens": 0
+  },
+  "plan": {
+    "schemaVersion": 1,
+    "id": "981e5dd7-6e04-47be-bfa9-e8f3ae0953e8",
+    "createdAt": "2026-10-03T22:12:40.548Z",
+    "snapshotId": "bd5fa434-aca9-432a-a7b3-171caea2c125",
+    "snapshotHash": "dc898a432137fae87c279c25d7a5ceeae4b5cb8ddb490a5c7638e4743b6d57a5",
+    "scopeId": "adf354aa-6994-4ad5-a7cd-e5dee3414cd4",
+    "diagnosis": {
+      "kind": "foundry",
+      "supported": true,
+      "compiler": "0.8.28",
+      "evm": "cancun",
+      "settings": {
+        "src": "src",
+        "test": "test",
+        "libs": [],
+        "solc_version": "0.8.28",
+        "evm_version": "cancun",
+        "optimizer": true,
+        "optimizer_runs": 200
+      },
+      "issues": [],
+      "notes": [
+        "Source-only intake does not establish compiler, test, property or security coverage.",
+        "FFI, filesystem cheatcode access, RPC and dependency downloads are denied.",
+        "Fuzz seed and campaign limits are imposed by the approved execution plan."
+      ]
+    },
+    "tasks": [
+      "intake"
+    ],
+    "limits": {
+      "seconds": 120,
+      "memoryMb": 1024,
+      "cpus": 1,
+      "pids": 64,
+      "diskMb": 128,
+      "maxOutputBytes": 2097152,
+      "tokens": 24000,
+      "maxTasks": 4
+    },
+    "image": null,
+    "provider": null,
+    "egress": [],
+    "methodology": "native-review-v1",
+    "adapterVersion": "0.1.0",
+    "hash": "a340821ec1200521f7384f78d426be79e75038f97511091124dfe30ecf49263b"
+  },
+  "snapshot": {
+    "schemaVersion": 1,
+    "id": "bd5fa434-aca9-432a-a7b3-171caea2c125",
+    "createdAt": "2026-10-03T22:12:40.543Z",
+    "scopeId": "adf354aa-6994-4ad5-a7cd-e5dee3414cd4",
+    "hash": "dc898a432137fae87c279c25d7a5ceeae4b5cb8ddb490a5c7638e4743b6d57a5",
+    "files": [
+      {
+        "path": "foundry.toml",
+        "hash": "b25ecf044612ab7afe057cedb6c207f8b54d3f9b2cb36551be55bdbff283c94b",
+        "bytes": 139,
+        "lines": 9
+      },
+      {
+        "path": "src/CreditLedger.sol",
+        "hash": "b10ad1d7b4872bee4a285c2446e764ade928bb4fe1c513e1b67a5a6ff3771a43",
+        "bytes": 1032,
+        "lines": 31
+      },
+      {
+        "path": "test/CreditLedger.t.sol",
+        "hash": "b3c80166b9331d4f12f8f957457d036722916ba34a0ba84390a7f7af94225e9e",
+        "bytes": 1612,
+        "lines": 41
+      }
+    ],
+    "excluded": [],
+    "dependencyLocks": {}
+  },
+  "scope": {
+    "schemaVersion": 1,
+    "id": "adf354aa-6994-4ad5-a7cd-e5dee3414cd4",
+    "createdAt": "2026-10-03T22:12:40.530Z",
+    "projectId": "71af90e1-fdbe-435c-84b3-c778c202261a",
+    "authorized": true,
+    "paths": [
+      "src",
+      "test",
+      "foundry.toml"
+    ],
+    "exclusions": [],
+    "requirements": "Original synthetic fixture: owner-only credit issuance, accounting conservation, bounded retirement, downward unit rounding. No real funds.",
+    "permission": "owned"
+  },
+  "project": {
+    "schemaVersion": 1,
+    "id": "71af90e1-fdbe-435c-84b3-c778c202261a",
+    "createdAt": "2026-10-03T22:12:40.527Z",
+    "name": "vault",
+    "root": "<original-bundled-fixture>",
+    "origin": "bundled-fixture"
+  },
+  "tasks": [
+    {
+      "schemaVersion": 1,
+      "id": "c64d55f8-4d48-43da-acd2-7e63f5630eb4",
+      "createdAt": "2026-10-03T22:12:40.556Z",
+      "runId": "7b9fcbbf-396d-48d4-adb4-d9658f02bcaf",
+      "kind": "intake",
+      "state": "succeeded",
+      "dependencies": [],
+      "attempts": 1,
+      "leaseUntil": null,
+      "leaseOwner": null,
+      "detail": "Recorded 3 authorized files. Supported Foundry configuration.",
+      "evidence": [
+        "4db477115b659d7347f00adb9f85887c8e8469571e65315ac141468a36e6c570"
+      ]
+    }
+  ],
+  "findings": [],
+  "observations": [],
+  "properties": [],
+  "coverage": [
+    {
+      "schemaVersion": 1,
+      "id": "a0173a14-1fc9-4147-89b3-6a2ec565cb8f",
+      "createdAt": "2026-10-03T22:12:40.561Z",
+      "runId": "7b9fcbbf-396d-48d4-adb4-d9658f02bcaf",
+      "taskId": "c64d55f8-4d48-43da-acd2-7e63f5630eb4",
+      "state": "succeeded",
+      "claim": "Recorded 3 authorized files. Supported Foundry configuration.",
+      "gaps": [
+        "No semantic, test, or property coverage established by intake."
+      ],
+      "evidence": [
+        "4db477115b659d7347f00adb9f85887c8e8469571e65315ac141468a36e6c570"
+      ]
+    }
+  ],
+  "executions": [],
+  "invocations": [],
+  "decisions": [
+    {
+      "schemaVersion": 1,
+      "id": "29849b5c-43ae-4049-b726-d00e9d1891b2",
+      "createdAt": "2026-10-03T22:12:40.553Z",
+      "subjectId": "981e5dd7-6e04-47be-bfa9-e8f3ae0953e8",
+      "action": "approve-plan",
+      "rationale": "Explicit demo invocation authorizes only original bundled fixture and existing tests; no cloud egress.",
+      "actor": "bundled-fixture-demo",
+      "boundHash": "a340821ec1200521f7384f78d426be79e75038f97511091124dfe30ecf49263b"
+    }
+  ],
+  "events": [
+    {
+      "seq": 9,
+      "run_id": "7b9fcbbf-396d-48d4-adb4-d9658f02bcaf",
+      "at": "2026-10-03T22:12:40.557Z",
+      "message": "Approved plan enqueued."
+    },
+    {
+      "seq": 10,
+      "run_id": "7b9fcbbf-396d-48d4-adb4-d9658f02bcaf",
+      "at": "2026-10-03T22:12:40.559Z",
+      "message": "intake: running (attempt 1)"
+    },
+    {
+      "seq": 11,
+      "run_id": "7b9fcbbf-396d-48d4-adb4-d9658f02bcaf",
+      "at": "2026-10-03T22:12:40.562Z",
+      "message": "intake: succeeded — Recorded 3 authorized files. Supported Foundry configuration."
+    },
+    {
+      "seq": 12,
+      "run_id": "7b9fcbbf-396d-48d4-adb4-d9658f02bcaf",
+      "at": "2026-10-03T22:12:40.564Z",
+      "message": "Run succeeded. Review coverage gaps before relying on results."
+    }
+  ],
+  "disclaimer": "An empty findings list is not a security certificate. Completed checks establish only their stated coverage."
+}

@@ -1,0 +1,13 @@
+# Architecture
+
+Gebal is a local CLI and bring-your-own-AI review harness. `packages/core` owns canonical schemas, intake, context packaging/import, planning, persistence, reports and state transitions. `packages/adapters` owns restricted Docker execution and optional provider HTTP calls. CLI and worker share this engine. There is no web/API server in the first iteration.
+
+The own-agent path is: select authorized literal source paths → snapshot actual bytes → diagnose configuration → inspect and approve the plan hash → execute source-only intake → export a cold context packet → use the owner's existing assistant → import validated inert JSON → human triage and reports. The context omits peer findings, analyzer warnings and benchmark labels. The importer pins exact source/context hashes and validates source spans; it cannot verify which external model actually produced the result or enforce that assistant's spend. That uncertainty stays visible. Import never changes deterministic task outcomes or executes content.
+
+The optional tools path adds approved isolated compilation, existing tests and Slither. Optional direct providers add plan-bound egress and token reservations. `run --enqueue` plus the separate worker supports long-running jobs independent of a terminal frontend. Foreground `run` uses the same engine.
+
+SQLite stores versioned records, a relational task queue, events and token reservations. Source/evidence bytes live under SHA-256 filenames outside assessed repositories. Plans bind manifest, requirements, exclusions, image digest, compiler/EVM/settings, adapter/method versions, direct provider/model/output limit, egress and resource bounds. Hash integrity is checked on read. Findings reference known source spans, observations and resolvable artifacts. Human decisions append rather than silently replace earlier judgments.
+
+The queue claims work with `BEGIN IMMEDIATE`. Only one tool resource envelope runs per assessment even with multiple worker processes. Live leases block manual resume. Expired local tasks recover with at most three attempts. Uncertain direct provider calls retain reservations and are not automatically retried. Cancellation aborts requests and removes tool containers. This is at-least-once local scheduling, not exactly-once remote execution. Each explicit resume grants a fresh bounded wall-time window; previous attempts remain visible.
+
+Node 22.13+ supplies SQLite (`node:sqlite`, experimental in the selected Node 22 runtime). Internal workspace packages share a root toolchain and are not published to npm. The owner/private store is trusted; this is not a multi-user or multi-tenant service.

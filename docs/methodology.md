@@ -1,0 +1,15 @@
+# Native review methodology v1
+
+The first slice establishes evidence and approval discipline. Intake only enumerates authorized files and diagnoses supported Foundry configurations. It does not infer architecture or prove any property. Compiler facts, existing test outcomes and Slither detector observations are separate evidence types. Test failures remain test outcomes rather than automatically becoming security findings. Empty/all-skipped campaigns are unknown, not success. Unknown tool versions/output schemas fail explicitly.
+
+The optional provider pass receives pinned original source and owner-stated requirements, no peer findings or analyzer output, a native defensive review instruction, a fixed structured response schema and a token allowance. It has no tools and cannot execute code. Source-linked observations record confidence and assumptions. This is one model pass, not independent consensus or skeptical adjudication. No generated tests, specification revisions or fixes are executed.
+
+Accounting-first reasoning is a promising perspective: state required conservation laws before assessing implementation. Cold independent perspectives may reduce shared conclusions but shared code, requirements and any summary still correlate the results. Skeptical review should challenge assumptions using evidence rather than manufacture confirmation. Those methods are documented as future evaluation dimensions; no reference pack is imported or claimed to improve measured detection here.
+
+Safety and liveness must remain distinct. The original credit-ledger fixture covers authorization, conservation, rounding, and bounded retirement, but passing a bounded retirement example would not prove universal exit availability. Property schemas record assumptions and owner approval. A useful registry/editor, automatic source maps, skeptical reviewer, human merge/unmerge, coverage reachability/revert metrics and robust semantic impact analysis remain later work.
+
+Costs: token capacity is reserved for the complete serialized context, response maximum and conservative overhead before a request. Byte-count input reservation intentionally overestimates typical tokenization. Provider usage is stored afterward. Monetary pricing is unknown and there is no USD budget enforcement or pricing catalog in this slice. Zero network retries avoids ambiguous double billing. No provider/model substitution occurs. There is no cross-run evidence cache: changed inputs always cause fresh work and comparison marks old findings stale.
+
+## Bring-your-own-AI first iteration
+
+The default source-only plan exports an exact hashed cold context for the owner's existing assistant. `agents/REVIEW.md` defines the source-only review discipline and `agents/response.schema.json` the inert result protocol. The importer verifies source/context hashes, validates spans, preserves original responses and leaves human disposition undecided. It cannot establish which model ran, enforce external model settings/budgets, or prove cold independence; those claims remain operator-reported/unknown. External review never turns missing deterministic evidence into a completed check.

@@ -1,0 +1,297 @@
+{
+  "schemaVersion": 1,
+  "brand": "Gebal",
+  "domain": "gebal.ai",
+  "run": {
+    "schemaVersion": 1,
+    "id": "77a4cf35-baa8-4310-8f6a-732175075df9",
+    "createdAt": "2026-10-03T21:58:26.394Z",
+    "planId": "c22da594-ec6d-49b4-8356-1a3677950f1d",
+    "snapshotId": "6d10d0e2-8685-41c2-99f4-00553f68d516",
+    "state": "blocked",
+    "finishedAt": "2026-10-03T21:58:26.401Z",
+    "cancelRequested": false,
+    "costUsd": null,
+    "reservedTokens": 0,
+    "usedTokens": 0
+  },
+  "plan": {
+    "schemaVersion": 1,
+    "id": "c22da594-ec6d-49b4-8356-1a3677950f1d",
+    "createdAt": "2026-10-03T21:58:26.389Z",
+    "snapshotId": "6d10d0e2-8685-41c2-99f4-00553f68d516",
+    "snapshotHash": "dc898a432137fae87c279c25d7a5ceeae4b5cb8ddb490a5c7638e4743b6d57a5",
+    "scopeId": "4fca281f-a96e-4401-80d7-3aa862ac02da",
+    "diagnosis": {
+      "kind": "foundry",
+      "supported": true,
+      "compiler": "0.8.28",
+      "evm": "cancun",
+      "settings": {
+        "src": "src",
+        "test": "test",
+        "libs": [],
+        "solc_version": "0.8.28",
+        "evm_version": "cancun",
+        "optimizer": true,
+        "optimizer_runs": 200
+      },
+      "issues": [],
+      "notes": [
+        "Source-only intake does not establish compiler, test, property or security coverage.",
+        "FFI, filesystem cheatcode access, RPC and dependency downloads are denied.",
+        "Fuzz seed and campaign limits are imposed by the approved execution plan."
+      ]
+    },
+    "tasks": [
+      "intake",
+      "foundry-build",
+      "foundry-test",
+      "slither"
+    ],
+    "limits": {
+      "seconds": 120,
+      "memoryMb": 1024,
+      "cpus": 1,
+      "pids": 64,
+      "diskMb": 128,
+      "maxOutputBytes": 2097152,
+      "tokens": 24000,
+      "maxTasks": 4
+    },
+    "image": null,
+    "provider": null,
+    "egress": [],
+    "methodology": "native-review-v1",
+    "adapterVersion": "0.1.0",
+    "hash": "0bb5d3f05dbb82166471ee8d0463c86bf63abfc627c0308e9c59b66a2d85f671"
+  },
+  "snapshot": {
+    "schemaVersion": 1,
+    "id": "6d10d0e2-8685-41c2-99f4-00553f68d516",
+    "createdAt": "2026-10-03T21:58:26.387Z",
+    "scopeId": "4fca281f-a96e-4401-80d7-3aa862ac02da",
+    "hash": "dc898a432137fae87c279c25d7a5ceeae4b5cb8ddb490a5c7638e4743b6d57a5",
+    "files": [
+      {
+        "path": "foundry.toml",
+        "hash": "b25ecf044612ab7afe057cedb6c207f8b54d3f9b2cb36551be55bdbff283c94b",
+        "bytes": 139,
+        "lines": 9
+      },
+      {
+        "path": "src/CreditLedger.sol",
+        "hash": "b10ad1d7b4872bee4a285c2446e764ade928bb4fe1c513e1b67a5a6ff3771a43",
+        "bytes": 1032,
+        "lines": 31
+      },
+      {
+        "path": "test/CreditLedger.t.sol",
+        "hash": "b3c80166b9331d4f12f8f957457d036722916ba34a0ba84390a7f7af94225e9e",
+        "bytes": 1612,
+        "lines": 41
+      }
+    ],
+    "excluded": [],
+    "dependencyLocks": {}
+  },
+  "scope": {
+    "schemaVersion": 1,
+    "id": "4fca281f-a96e-4401-80d7-3aa862ac02da",
+    "createdAt": "2026-10-03T21:58:26.375Z",
+    "projectId": "47c57d40-29eb-405b-bd8f-ebb1a1a9f353",
+    "authorized": true,
+    "paths": [
+      "src",
+      "test",
+      "foundry.toml"
+    ],
+    "exclusions": [],
+    "requirements": "Original synthetic fixture: owner-only credit issuance, accounting conservation, bounded retirement, downward unit rounding. No real funds.",
+    "permission": "owned"
+  },
+  "project": {
+    "schemaVersion": 1,
+    "id": "47c57d40-29eb-405b-bd8f-ebb1a1a9f353",
+    "createdAt": "2026-10-03T21:58:26.373Z",
+    "name": "vault",
+    "root": "<original-bundled-fixture>"
+  },
+  "tasks": [
+    {
+      "schemaVersion": 1,
+      "id": "97861fbb-001f-4198-b23b-b2bb256977f0",
+      "createdAt": "2026-10-03T21:58:26.394Z",
+      "runId": "77a4cf35-baa8-4310-8f6a-732175075df9",
+      "kind": "intake",
+      "state": "succeeded",
+      "dependencies": [],
+      "attempts": 1,
+      "leaseUntil": null,
+      "leaseOwner": null,
+      "detail": "Recorded 3 authorized files. Supported Foundry configuration.",
+      "evidence": [
+        "c7d3fb11c6b10191bc3f9ed3a38c415f7f01063199a5849fd945d6edcd79e0d8"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "19fa4250-e125-4641-870d-264593bfebbe",
+      "createdAt": "2026-10-03T21:58:26.395Z",
+      "runId": "77a4cf35-baa8-4310-8f6a-732175075df9",
+      "kind": "foundry-build",
+      "state": "blocked",
+      "dependencies": [
+        "97861fbb-001f-4198-b23b-b2bb256977f0"
+      ],
+      "attempts": 1,
+      "leaseUntil": null,
+      "leaseOwner": null,
+      "detail": "No approved immutable tool image. No host execution was attempted.",
+      "evidence": []
+    },
+    {
+      "schemaVersion": 1,
+      "id": "f5c281f9-ef22-41c9-bc54-f518cdfc0e69",
+      "createdAt": "2026-10-03T21:58:26.395Z",
+      "runId": "77a4cf35-baa8-4310-8f6a-732175075df9",
+      "kind": "slither",
+      "state": "blocked",
+      "dependencies": [
+        "97861fbb-001f-4198-b23b-b2bb256977f0"
+      ],
+      "attempts": 1,
+      "leaseUntil": null,
+      "leaseOwner": null,
+      "detail": "No approved immutable tool image. No host execution was attempted.",
+      "evidence": []
+    },
+    {
+      "schemaVersion": 1,
+      "id": "4501edbb-9c03-49d8-be8a-a239129845b1",
+      "createdAt": "2026-10-03T21:58:26.395Z",
+      "runId": "77a4cf35-baa8-4310-8f6a-732175075df9",
+      "kind": "foundry-test",
+      "state": "not-run",
+      "dependencies": [
+        "19fa4250-e125-4641-870d-264593bfebbe"
+      ],
+      "attempts": 0,
+      "leaseUntil": null,
+      "leaseOwner": null,
+      "detail": "Prerequisite did not succeed",
+      "evidence": []
+    }
+  ],
+  "findings": [],
+  "observations": [],
+  "properties": [],
+  "coverage": [
+    {
+      "schemaVersion": 1,
+      "id": "85d2d2e9-ee90-447e-aee0-0104cfb20234",
+      "createdAt": "2026-10-03T21:58:26.398Z",
+      "runId": "77a4cf35-baa8-4310-8f6a-732175075df9",
+      "taskId": "97861fbb-001f-4198-b23b-b2bb256977f0",
+      "state": "succeeded",
+      "claim": "Recorded 3 authorized files. Supported Foundry configuration.",
+      "gaps": [
+        "No semantic, test, or property coverage established by intake."
+      ],
+      "evidence": [
+        "c7d3fb11c6b10191bc3f9ed3a38c415f7f01063199a5849fd945d6edcd79e0d8"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "52855a59-d28e-45da-bd88-46e80b961fc0",
+      "createdAt": "2026-10-03T21:58:26.399Z",
+      "runId": "77a4cf35-baa8-4310-8f6a-732175075df9",
+      "taskId": "19fa4250-e125-4641-870d-264593bfebbe",
+      "state": "blocked",
+      "claim": "No approved immutable tool image. No host execution was attempted.",
+      "gaps": [
+        "Check incomplete or blocked; no security coverage claimed."
+      ],
+      "evidence": []
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ee753fb1-1a9c-4e12-8703-942bcb5c15ec",
+      "createdAt": "2026-10-03T21:58:26.400Z",
+      "runId": "77a4cf35-baa8-4310-8f6a-732175075df9",
+      "taskId": "f5c281f9-ef22-41c9-bc54-f518cdfc0e69",
+      "state": "blocked",
+      "claim": "No approved immutable tool image. No host execution was attempted.",
+      "gaps": [
+        "Check incomplete or blocked; no security coverage claimed."
+      ],
+      "evidence": []
+    }
+  ],
+  "executions": [],
+  "invocations": [],
+  "decisions": [
+    {
+      "schemaVersion": 1,
+      "id": "9d0c2a7f-0f70-44e1-9784-eeebe415491e",
+      "createdAt": "2026-10-03T21:58:26.392Z",
+      "subjectId": "c22da594-ec6d-49b4-8356-1a3677950f1d",
+      "action": "approve-plan",
+      "rationale": "Explicit demo invocation authorizes only original bundled fixture and existing tests; no cloud egress.",
+      "actor": "bundled-fixture-demo",
+      "boundHash": "0bb5d3f05dbb82166471ee8d0463c86bf63abfc627c0308e9c59b66a2d85f671"
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "run_id": "77a4cf35-baa8-4310-8f6a-732175075df9",
+      "at": "2026-10-03T21:58:26.395Z",
+      "message": "Approved plan enqueued."
+    },
+    {
+      "seq": 2,
+      "run_id": "77a4cf35-baa8-4310-8f6a-732175075df9",
+      "at": "2026-10-03T21:58:26.397Z",
+      "message": "intake: running (attempt 1)"
+    },
+    {
+      "seq": 3,
+      "run_id": "77a4cf35-baa8-4310-8f6a-732175075df9",
+      "at": "2026-10-03T21:58:26.398Z",
+      "message": "intake: succeeded — Recorded 3 authorized files. Supported Foundry configuration."
+    },
+    {
+      "seq": 4,
+      "run_id": "77a4cf35-baa8-4310-8f6a-732175075df9",
+      "at": "2026-10-03T21:58:26.399Z",
+      "message": "foundry-build: running (attempt 1)"
+    },
+    {
+      "seq": 5,
+      "run_id": "77a4cf35-baa8-4310-8f6a-732175075df9",
+      "at": "2026-10-03T21:58:26.399Z",
+      "message": "foundry-build: blocked — No approved immutable tool image. No host execution was attempted."
+    },
+    {
+      "seq": 6,
+      "run_id": "77a4cf35-baa8-4310-8f6a-732175075df9",
+      "at": "2026-10-03T21:58:26.399Z",
+      "message": "slither: running (attempt 1)"
+    },
+    {
+      "seq": 7,
+      "run_id": "77a4cf35-baa8-4310-8f6a-732175075df9",
+      "at": "2026-10-03T21:58:26.400Z",
+      "message": "slither: blocked — No approved immutable tool image. No host execution was attempted."
+    },
+    {
+      "seq": 8,
+      "run_id": "77a4cf35-baa8-4310-8f6a-732175075df9",
+      "at": "2026-10-03T21:58:26.401Z",
+      "message": "Run blocked. Review coverage gaps before relying on results."
+    }
+  ],
+  "disclaimer": "An empty findings list is not a security certificate. Completed checks establish only their stated coverage."
+}

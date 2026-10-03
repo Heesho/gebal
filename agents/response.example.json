@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "snapshotHash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "contextHash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "review": {
+    "observations": [],
+    "gaps": ["Format example only. Replace both hashes with values from the actual context and write your own review. No model review or security coverage is claimed by this example."]
+  }
+}

@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.gebal/
+.env
+*.sqlite*
+.DS_Store

@@ -1,0 +1,110 @@
+{
+  "consultedDate": "2026-10-03",
+  "scope": "Root README and license files; conceptual inspection, no imported code or method packs",
+  "repositories": [
+    {
+      "repo": "0xsimao/0xsimao-ai",
+      "revision": "3f81e5803174182a7db07eca87849d2b3d571113",
+      "license": null
+    },
+    {
+      "repo": "pashov/skills",
+      "revision": "8ce544c9c9affab448d3dc4c79191d052e3a57ec",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      }
+    },
+    {
+      "repo": "Kritt-ai/open-kritt",
+      "revision": "43e1d19a00ce50bd93253d1c6c3a48cfffbcc4c3",
+      "license": {
+        "key": "agpl-3.0",
+        "name": "GNU Affero General Public License v3.0",
+        "spdx_id": "AGPL-3.0",
+        "url": "https://api.github.com/licenses/agpl-3.0",
+        "node_id": "MDc6TGljZW5zZTE="
+      }
+    },
+    {
+      "repo": "trailofbits/skills",
+      "revision": "82fe8226252622fa807643bdca1710901198553a",
+      "license": {
+        "key": "cc-by-sa-4.0",
+        "name": "Creative Commons Attribution Share Alike 4.0 International",
+        "spdx_id": "CC-BY-SA-4.0",
+        "url": "https://api.github.com/licenses/cc-by-sa-4.0",
+        "node_id": "MDc6TGljZW5zZTI2"
+      }
+    },
+    {
+      "repo": "crytic/slither",
+      "revision": "eef5df948b8992eff85786b6b0bb4a193933e2c9",
+      "license": {
+        "key": "agpl-3.0",
+        "name": "GNU Affero General Public License v3.0",
+        "spdx_id": "AGPL-3.0",
+        "url": "https://api.github.com/licenses/agpl-3.0",
+        "node_id": "MDc6TGljZW5zZTE="
+      }
+    },
+    {
+      "repo": "Cyfrin/aderyn",
+      "revision": "de6a0904a07ec20966b2b8f2ece4e89f0ada7bdb",
+      "license": {
+        "key": "gpl-3.0",
+        "name": "GNU General Public License v3.0",
+        "spdx_id": "GPL-3.0",
+        "url": "https://api.github.com/licenses/gpl-3.0",
+        "node_id": "MDc6TGljZW5zZTk="
+      }
+    },
+    {
+      "repo": "foundry-rs/foundry",
+      "revision": "60255eee79332caef99f0c885f55589769f8f0c0",
+      "license": {
+        "key": "apache-2.0",
+        "name": "Apache License 2.0",
+        "spdx_id": "Apache-2.0",
+        "url": "https://api.github.com/licenses/apache-2.0",
+        "node_id": "MDc6TGljZW5zZTI="
+      }
+    },
+    {
+      "repo": "crytic/echidna",
+      "revision": "5403657dbf515f5bd8801bf99d4fcdec302ee817",
+      "license": {
+        "key": "agpl-3.0",
+        "name": "GNU Affero General Public License v3.0",
+        "spdx_id": "AGPL-3.0",
+        "url": "https://api.github.com/licenses/agpl-3.0",
+        "node_id": "MDc6TGljZW5zZTE="
+      }
+    },
+    {
+      "repo": "a16z/halmos",
+      "revision": "079bb4241d1b460baf986257d56ea86977d73451",
+      "license": {
+        "key": "agpl-3.0",
+        "name": "GNU Affero General Public License v3.0",
+        "spdx_id": "AGPL-3.0",
+        "url": "https://api.github.com/licenses/agpl-3.0",
+        "node_id": "MDc6TGljZW5zZTE="
+      }
+    },
+    {
+      "repo": "Certora/AutoProver",
+      "revision": "709293a91de9c23d18694dcc7e0fdf3d0e508d6d",
+      "license": {
+        "key": "gpl-3.0",
+        "name": "GNU General Public License v3.0",
+        "spdx_id": "GPL-3.0",
+        "url": "https://api.github.com/licenses/gpl-3.0",
+        "node_id": "MDc6TGljZW5zZTk="
+      }
+    }
+  ]
+}
